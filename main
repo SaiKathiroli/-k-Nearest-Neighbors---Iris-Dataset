@@ -1,0 +1,46 @@
+"""
+Building Your First Model: k-Nearest Neighbors
+
+Making Predictions
+
+Evaluating the Model
+"""
+
+from sklearn.datasets import load_iris
+
+iris_data = load_iris()
+
+from sklearn.model_selection import train_test_split
+
+X_train, X_test = train_test_split(iris_data['data'], random_state=32)
+y_train, y_test = train_test_split(iris_data['target'], random_state=32)
+
+from sklearn.neighbors import KNeighborsClassifier
+
+knn = KNeighborsClassifier(n_neighbors=4)
+# print(knn)
+
+knn.fit(X_train, y_train)
+
+# prediction
+import numpy as np
+check = np.array([[1, 2, 3, 4]])
+
+digit = knn.predict(check)
+print(digit)
+print("\n")
+print(iris_data.keys())
+print("\n")
+print(iris_data['target_names'][digit[0]])
+print("\n")
+
+# verifying the accuracy of the model with the test set
+
+test_prediction = knn.predict(X_test)
+print(test_prediction)
+print("\n")
+
+verify1 = np.mean((y_test == test_prediction))
+print(verify1)
+print("\n")
+print(knn.score(X_test, y_test))
